@@ -1,18 +1,21 @@
 <template>
-  <div class="nav-wrapper">
-    <div class="content"><slot/></div>
+  <div class="layuot-wrapper">
+    <div class="content" :class="classPrefix && `${classPrefix}-content`">
+      <slot />
+    </div>
     <Nav />
   </div>
 </template>
 
 <script>
 export default {
-    name:'Layuot'
+  props: ["classPrefix"],
+  name: "Layuot"
 };
 </script>
 
 <style lang="scss" scoped>
-.nav-wrapper {
+.layuot-wrapper {
   display: flex;
   flex-direction: column;
   height: 100vh;

@@ -14,4 +14,9 @@ body {
   font-family: $font-hei;
   line-height: 1.5;
 }
+.clearfix::after{
+  content: '';
+  display: block;
+  clear: both;
+}
 </style>
