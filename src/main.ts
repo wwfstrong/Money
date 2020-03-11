@@ -5,11 +5,13 @@ import router from './router'
 import store from './store'
 import Nav from '@/components/Nav.vue'
 import Layuot from '@/components/Layuot.vue'
+import Icon from '@/components/Icon.vue'
 
 Vue.config.productionTip = false
 
 Vue.component('Nav', Nav)
 Vue.component('Layuot', Layuot)
+Vue.component('Icon', Icon)
 new Vue({
   router,
   store,
