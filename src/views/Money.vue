@@ -3,11 +3,11 @@
     <NumberPad />
     <Types />
     <Notes />
-    <Tags />
+    <Tags :data-source.sync="tags" />
   </Layuot>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import NumberPad from "@/components/money/NumberPad.vue";
 import Types from "@/components/money/Types.vue";
 import Notes from "@/components/money/Notes.vue";
@@ -19,6 +19,11 @@ export default {
     Notes,
     Types,
     NumberPad
+  },
+  data(){
+    return {
+      tags:['衣','食','住','行']
+    }
   }
 };
 </script>
