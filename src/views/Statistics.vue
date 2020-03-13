@@ -1,7 +1,7 @@
 <template>
-  <Layuot>
+  <Layout>
     Statistics.vue
-  </Layuot>
+  </Layout>
 </template>
 
 <script>
