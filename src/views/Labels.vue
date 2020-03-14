@@ -15,8 +15,6 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import tagListModel from "@/models/tagListModel";
 import Button from "@/components/Button.vue";
 @Component({
   components: { Button }
