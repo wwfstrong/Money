@@ -1,6 +1,7 @@
-import createId from "@/lib/createId"
+import createId from '@/lib/createId';
 
 const localStorageKeyName = 'tagList';
+
 const tagStore = {
     tagList: [] as Tag[],
     fetchTags() {
@@ -56,4 +57,5 @@ const tagStore = {
 };
 
 tagStore.fetchTags();
-export default tagStore;     
+
+export default tagStore;
