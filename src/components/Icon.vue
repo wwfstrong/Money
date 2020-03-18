@@ -1,10 +1,10 @@
 <template>
-  <svg class="icon">
+  <svg class="icon" @click="$emit('click', $event)">
     <use :xlink:href="'#'+name" />
   </svg>
 </template>
 
-<script lang='ts'>
+<script lang="ts">
 const importAll = (requireContext: __WebpackModuleApi.RequireContext) =>
   requireContext.keys().forEach(requireContext);
 try {
