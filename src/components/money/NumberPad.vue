@@ -1,68 +1,45 @@
-  
 <template>
   <div class="numberPad">
-    <div class="output">{{output}}</div>
     <div class="buttons">
       <button @click="inputContent">1</button>
       <button @click="inputContent">2</button>
       <button @click="inputContent">3</button>
-      <button @click="remove">删除</button>
+      <button @click="remove">
+        <Icon name="backspace" />
+      </button>
       <button @click="inputContent">4</button>
       <button @click="inputContent">5</button>
       <button @click="inputContent">6</button>
-      <button @click="clear">清空</button>
+      <button @click="clear">清零</button>
       <button @click="inputContent">7</button>
       <button @click="inputContent">8</button>
       <button @click="inputContent">9</button>
-      <button @click="ok" class="ok">OK</button>
+      <router-link to="/statistics">
+        <button @click="ok" class="ok">OK</button>
+      </router-link>
       <button @click="inputContent" class="zero">0</button>
       <button @click="inputContent">.</button>
     </div>
   </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
+
 @Component
 export default class NumberPad extends Vue {
-  @Prop(Number) readonly value!: number;
-  output = this.value.toString();
   inputContent(event: MouseEvent) {
-    const button = event.target as HTMLButtonElement;
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const input = button.textContent!;
-    if (this.output.length === 16) {
-      return;
-    }
-    if (this.output === "0") {
-      if ("0123456789".indexOf(input) >= 0) {
-        this.output = input;
-      } else {
-        this.output += input;
-      }
-      return;
-    }
-    if (this.output.indexOf(".") >= 0 && input === ".") {
-      return;
-    }
-    this.output += input;
+    this.$store.commit("inputContent", event);
   }
   remove() {
-    if (this.output.length === 1) {
-      this.output = "0";
-    } else {
-      this.output = this.output.slice(0, -1);
-    }
+    this.$store.commit("removeInput");
   }
   clear() {
-    this.output = "0";
+    this.$store.commit("clearInput");
   }
   ok() {
-    const number = parseFloat(this.output);
-    this.$emit("update:value", number);
-    this.$emit("submit", number);
-    this.output = "0";
+    this.$emit("submit");
   }
 }
 </script>
@@ -70,31 +47,24 @@ export default class NumberPad extends Vue {
 <style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
 .numberPad {
-  .output {
-    @extend %clearFix;
-    @extend %innerShadow;
-    font-size: 36px;
-    font-family: Consolas, monospace;
-    padding: 9px 16px;
-    text-align: right;
-    height: 72px;
-  }
   .buttons {
     @extend %clearFix;
-    > button {
+    button {
+      color: #ffffff;
       width: 25%;
-      height: 64px;
+      height: 50px;
       float: left;
+      font-size: 20px;
       background: transparent;
       border: none;
       &.ok {
-        height: 64 * 2px;
+        height: 100px;
         float: right;
       }
       &.zero {
-        width: 25 * 2%;
+        width: 50%;
       }
-      $bg: #f2f2f2;
+      $bg: #43b7da;
       &:nth-child(1) {
         background: $bg;
       }

@@ -13,7 +13,6 @@ const store = new Vuex.Store({
     type: '-',
     notes: '',
     recordList: [],
-    budget: null,
     payTags: ['其他', '餐饮', '交通', '购物', '服饰', '日用', '娱乐', '食材', '零食', '烟酒', '学习', '医疗', '住房', '水电', '通讯', '红包', '借出'],
     incomeTags: ['其他', '薪资', '奖金', '借入', '收债', '利息', '回收', '投资']
   } as RootState,
