@@ -8,83 +8,116 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
+    output: '0',
+    selectedTag: '其他',
+    type: '-',
+    notes: '',
     recordList: [],
-    createRecordError: null,
-    createTagError: null,
-    tagList: [],
-    currentTag: undefined
+    budget: null,
+    payTags: ['其他', '餐饮', '交通', '购物', '服饰', '日用', '娱乐', '食材', '零食', '烟酒', '学习', '医疗', '住房', '水电', '通讯', '红包', '借出'],
+    incomeTags: ['其他', '薪资', '奖金', '借入', '收债', '利息', '回收', '投资']
   } as RootState,
   mutations: {
-    setCurrentTag(state, id: string) {
-      state.currentTag = state.tagList.filter(t => t.id === id)[0];
+
+    //record
+    createRecord(state) {
+      const record: recordItem = { id: null, tag: state.selectedTag, notes: state.notes, type: state.type, amount: parseFloat(state.output) };
+      const record2: recordItem = clone(record);
+      record2.createAt = new Date().toISOString();
+      record2.id = createId().toString();
+      state.recordList.push(record2);
+      store.commit('saveRecords')
     },
-    updateTag(state, payload: { id: string; name: string }) {
-      const { id, name } = payload;
-      const idList = state.tagList.map(item => item.id);
+    fetchRecords(state) {
+      state.recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]') as recordItem[];
+    },
+    saveRecords(state) {
+      window.localStorage.setItem('recordList',
+        JSON.stringify(state.recordList));
+      state.output = '0';
+      state.notes = '';
+    },
+    updateRecord(state, payload) {
+      const { id, notes, amount } = payload;
+
+      const idList = state.recordList.map(item => item.id);
       if (idList.indexOf(id) >= 0) {
-        const names = state.tagList.map(item => item.name);
-        if (names.indexOf(name) >= 0) {
-          window.alert('标签名重复了');
-        } else {
-          const tag = state.tagList.filter(item => item.id === id)[0];
-          tag.name = name;
-          store.commit('saveTags');
-        }
+        const record = state.recordList.filter(item => item.id === id)[0];
+        record.notes = notes;
+        record.amount = amount;
+        store.commit('saveRecords');
       }
     },
-    removeTag(state, id: string) {
+    removeRecord(state, id: string) {
       let index = -1;
-      for (let i = 0; i < state.tagList.length; i++) {
-        if (state.tagList[i].id === id) {
+      for (let i = 0; i < state.recordList.length; i++) {
+        if (state.recordList[i].id === id) {
           index = i;
           break;
         }
       }
       if (index >= 0) {
-        state.tagList.splice(index, 1);
-        store.commit('saveTags');
+        state.recordList.splice(index, 1);
+        store.commit('saveRecords');
         router.back();
       } else {
         window.alert('删除失败');
       }
 
-    },
-    fetchRecords(state) {
-      state.recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
-    },
-    createRecord(state, record: RecordItem) {
-      const record2 = clone(record);
-      record2.createdAt = new Date().toISOString();
-      state.recordList.push(record2);
       store.commit('saveRecords');
     },
-    saveRecords(state) {
-      window.localStorage.setItem('recordList',
-        JSON.stringify(state.recordList));
-    },
-    fetchTags(state) {
-      state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
-      if (!state.tagList || state.tagList.length === 0) {
-        store.commit('createTag', '衣');
-        store.commit('createTag', '食');
-        store.commit('createTag', '住');
-        store.commit('createTag', '行');
+
+    //numberPad
+    inputContent(state, event: MouseEvent) {
+      const button = (event.target as HTMLButtonElement);
+      const input = button.textContent!;
+      if (state.output.length === 16) {
+        return
       }
-    },
-    createTag(state, name: string) {
-      state.createTagError = null;
-      const names = state.tagList.map(item => item.name);
-      if (names.indexOf(name) >= 0) {
-        state.createTagError = new Error('tag name duplicated');
+      if (state.output === '0') {
+        if ('0123456789'.indexOf(input) >= 0) {
+          state.output = input;
+        } else {
+          state.output += input;
+        }
         return;
       }
-      const id = createId().toString();
-      state.tagList.push({ id, name: name });
-      store.commit('saveTags');
+      if (state.output.indexOf('.') >= 0 && input === '.') {
+        return;
+      }
+      state.output += input;
     },
-    saveTags(state) {
-      window.localStorage.setItem('tagList', JSON.stringify(state.tagList));
+
+    removeInput(state) {
+      if (state.output.length === 1) {
+        state.output = '0';
+      } else {
+        state.output = state.output.slice(0, -1);
+      }
     },
+    clearInput(state) {
+      state.output = '0';
+    },
+
+
+    //tag
+    updateTag(state, name: string) {
+      if (state.payTags.indexOf(name) >= 0 || state.incomeTags.indexOf(name) >= 0) {
+        state.selectedTag = name;
+
+      }
+    },
+
+    // type
+    selectType(state, type: string) {
+      if (type !== '-' && type !== '+') {
+        throw new Error('type is unknown');
+      }
+      state.type = type;
+      if ((state.type === '+' && state.payTags.indexOf(state.selectedTag) >= 0) || (state.type === '-' && state.incomeTags.indexOf(state.selectedTag) >= 0)) {
+        state.selectedTag = '其他';
+      }
+    }
   }
 });
 
