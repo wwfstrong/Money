@@ -129,6 +129,7 @@ export default class General extends Vue {
   border: 2px solid #2598bb;
   border-radius: 5px;
   font-size: 18px;
+  min-height: 16.5%;
   span {
     font-weight: bold;
     color: #000000;
@@ -152,18 +153,19 @@ export default class General extends Vue {
     display: flex;
     justify-content: center;
     color: #007acc;
-    padding: 15px 0;
+    padding: 5px 0;
   }
 }
 
 .today {
-  margin: 10px 12px;
+  margin: 0 12px;
   display: flex;
   flex-direction: row;
   font-size: 18px;
   border: 2px solid #2598bb;
   border-radius: 5px;
   padding: 10px 0;
+  min-height: 11.5%;
   span {
     font-weight: bold;
     color: #000000;
@@ -182,17 +184,23 @@ export default class General extends Vue {
   }
 }
 .tags {
+  border-radius: 5px;
+  border: 2px solid #2598bb;
+  margin:10px 12px;
+  padding: 5px;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   flex-grow: 1;
   overflow-y: auto;
   .tag {
+    border-radius: 5px;
     background: #ffffff;
-    margin: 4px 12px;
+    margin: 4px 0px;
     padding: 10px 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    min-height: 72px;
     & span {
       display: flex;
       flex-direction: column;

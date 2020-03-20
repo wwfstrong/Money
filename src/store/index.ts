@@ -14,7 +14,7 @@ const store = new Vuex.Store({
     notes: '',
     recordList: [],
     payTags: ['其他', '餐饮', '交通', '购物', '服饰', '日用', '娱乐', '食材', '零食', '烟酒', '学习', '医疗', '住房', '水电', '通讯', '红包', '借出'],
-    incomeTags: ['其他', '薪资', '奖金', '借入', '收债', '利息', '回收', '投资']
+    incomeTags: ['其他', '薪资', '奖金', '借入', '收债', '利息', '回收', '投资','报销','兼职','礼金']
   } as RootState,
   mutations: {
 
@@ -24,7 +24,7 @@ const store = new Vuex.Store({
       const record2: recordItem = clone(record);
       record2.createAt = new Date().toISOString();
       record2.id = createId().toString();
-      state.recordList.push(record2);
+      state.recordList.unshift(record2);
       store.commit('saveRecords')
     },
     fetchRecords(state) {

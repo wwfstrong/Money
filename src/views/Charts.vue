@@ -4,9 +4,7 @@
     <div class="summary">
       <div>{{this.billDate()}}账单</div>
       <div>共{{this.billDetail('count','-')}}笔支出，￥-{{this.billDetail('amount','-')}}</div>
-      <div class="last">
-        <span>共{{this.billDetail('count','+')}}笔收入，￥{{this.billDetail('amount','+')}}</span>
-      </div>
+      <div>共{{this.billDetail('count','+')}}笔收入，￥{{this.billDetail('amount','+')}}</div>
     </div>
     <Types class="type" />
     <div>
@@ -394,16 +392,13 @@ export default {
 .v-chart-bar {
   background: #ffffff;
   width: 100%;
-  height: 200px;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  height: 32.5%;
 }
 .v-chart-pie {
   background: #ffffff;
   width: 100%;
-  height: 250px;
+  height: 41%;
   margin-top: 10px;
-  margin-bottom: 20px;
 }
 .title {
   background: #e8e8e8;
@@ -417,18 +412,15 @@ export default {
   border-radius: 5px;
   padding: 10px 12px;
   margin: 10px 10px;
+  display: flex;
+  flex-direction: column;
+  min-height: 19.5%;
   div {
     padding: 4px 0;
   }
 }
-.last {
-  display: flex;
-  justify-content: space-between;
-}
 .type ::v-deep {
   background: transparent;
-  display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   padding: 0 30px;
@@ -440,9 +432,5 @@ export default {
       background: transparent;
     }
   }
-}
-.histogram {
-  width: 100%;
-  height: 150px;
 }
 </style>
