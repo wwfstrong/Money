@@ -1,6 +1,11 @@
 <template>
   <div class="tags">
-    <span v-for="tag in currentTags" :key="tag">
+    <span
+      v-for="tag in currentTags"
+      :key="tag"
+      :class="{selected: selectedTags.indexOf(tag)>=0}"
+      @click="toggle(tag)"
+    >
       <Icon :name="tag"></Icon>
       {{tag}}
     </span>
@@ -13,6 +18,7 @@ import { Component } from "vue-property-decorator";
 
 @Component
 export default class Tags extends Vue {
+  selectedTags: string[] = [];
   get type() {
     return this.$store.state.type;
   }
@@ -22,6 +28,13 @@ export default class Tags extends Vue {
     } else {
       return this.$store.state.incomeTags;
     }
+  }
+  toggle(tag: string) {
+    this.selectedTags.length = 0;
+    this.selectedTags.push(tag);
+  }
+  beforeMount() {
+    this.toggle("其他");
   }
 }
 </script>
@@ -42,15 +55,14 @@ export default class Tags extends Vue {
     display: flex;
     flex-direction: column;
     text-align: center;
-    padding-bottom: 20px;
+    padding: 10px 0;
     .icon {
       width: 24px;
       height: 24px;
       margin: 0 auto;
     }
     &.selected {
-      background: green;
-      color: white;
+      color: blue;
     }
   }
 }

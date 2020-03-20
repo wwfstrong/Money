@@ -14,7 +14,7 @@
       <button @click="inputContent">7</button>
       <button @click="inputContent">8</button>
       <button @click="inputContent">9</button>
-      <router-link to="/statistics">
+      <router-link to="/">
         <button @click="ok" class="ok">OK</button>
       </router-link>
       <button @click="inputContent" class="zero">0</button>
@@ -57,14 +57,11 @@ export default class NumberPad extends Vue {
       font-size: 20px;
       background: transparent;
       border: none;
-      &.ok {
-        height: 100px;
-        float: right;
-      }
+      $bg: #43b7da;
+      
       &.zero {
         width: 50%;
       }
-      $bg: #43b7da;
       &:nth-child(1) {
         background: $bg;
       }
@@ -90,7 +87,9 @@ export default class NumberPad extends Vue {
       &:nth-child(14) {
         background: darken($bg, 4 * 5%);
       }
-      &:nth-child(12) {
+      &.ok {
+        height: 100px;
+        float: right;
         background: darken($bg, 4 * 6%);
       }
     }

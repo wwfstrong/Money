@@ -37,6 +37,8 @@ export default class Types extends Vue {
     justify-content: center;
     align-items: center;
     position: relative;
+    background: #deecec;
+    color: #0d966d;
     &.selected{
       background: #43b7da;
       color: #ffffff;
