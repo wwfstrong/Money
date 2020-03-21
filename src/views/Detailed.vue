@@ -184,8 +184,6 @@ export default class General extends Vue {
   }
 }
 .tags {
-  border-radius: 5px;
-  border: 2px solid #2598bb;
   margin:10px 12px;
   padding: 5px;
   display: flex;

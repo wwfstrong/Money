@@ -392,13 +392,14 @@ export default {
 .v-chart-bar {
   background: #ffffff;
   width: 100%;
-  height: 32.5%;
+  height: 200px;
+  margin: 10px 0px;
 }
 .v-chart-pie {
   background: #ffffff;
   width: 100%;
-  height: 41%;
-  margin-top: 10px;
+  height: 250px;
+  margin-bottom: 10px;
 }
 .title {
   background: #e8e8e8;
